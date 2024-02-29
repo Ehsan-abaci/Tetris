@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tetris/main.dart';
@@ -150,89 +151,101 @@ class _StartMenuState extends State<StartMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 2,
-                child: GridView.builder(
-                  itemCount: 23 * 7,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 23,
-                  ),
-                  itemBuilder: (context, index) {
-                    if (points.contains(index)) {
-                      if (points.sublist(0, 7).contains(index)) {
-                        return Pixel(
-                          color: Colors.red.shade800,
-                        );
-                      } else if (points.sublist(7, 18).contains(index)) {
-                        return Pixel(color: Colors.blue.shade800);
-                      } else if (points.sublist(18, 25).contains(index)) {
-                        return Pixel(color: Colors.yellow.shade800);
-                      } else if (points.sublist(25, 37).contains(index)) {
-                        return Pixel(color: Colors.green.shade800);
-                      } else if (points.sublist(37, 42).contains(index)) {
-                        return Pixel(color: Colors.pink.shade800);
-                      } else if (points
-                          .sublist(37, points.length)
-                          .contains(index)) {
-                        return Pixel(color: Colors.orange.shade800);
-                      }
-                    }
-                    return const Pixel(
-                      color: Colors.black,
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  "Best score : ${widget.bestScore}",
-                  style: const TextStyle(fontSize: 40, color: Colors.white),
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: LayoutBuilder(
+        builder: (context, constraints) => SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: Center(
+            child: SizedBox(
+              height: constraints.maxHeight,
+              width: kIsWeb ? constraints.maxWidth * .27 : constraints.maxWidth,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Flexible(
+                      flex: 2,
+                      child: GridView.builder(
+                        itemCount: 23 * 7,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 23,
+                        ),
+                        itemBuilder: (context, index) {
+                          if (points.contains(index)) {
+                            if (points.sublist(0, 7).contains(index)) {
+                              return Pixel(
+                                color: Colors.red.shade800,
+                              );
+                            } else if (points.sublist(7, 18).contains(index)) {
+                              return Pixel(color: Colors.blue.shade800);
+                            } else if (points.sublist(18, 25).contains(index)) {
+                              return Pixel(color: Colors.yellow.shade800);
+                            } else if (points.sublist(25, 37).contains(index)) {
+                              return Pixel(color: Colors.green.shade800);
+                            } else if (points.sublist(37, 42).contains(index)) {
+                              return Pixel(color: Colors.pink.shade800);
+                            } else if (points
+                                .sublist(37, points.length)
+                                .contains(index)) {
+                              return Pixel(color: Colors.orange.shade800);
+                            }
+                          }
+                          return const Pixel(
+                            color: Colors.black,
+                          );
+                        },
+                      ),
+                    ),
                     Expanded(
-                        child: modeButton(
-                      "Easy",
-                      () {
-                        changeMode(Mode.EASY);
-                      },
-                      isEasy,
-                    )),
+                      child: Text(
+                        "Best score : ${widget.bestScore}",
+                        style:
+                            const TextStyle(fontSize: 40, color: Colors.white),
+                      ),
+                    ),
                     Expanded(
-                        child: modeButton(
-                      "Medium",
-                      () {
-                        changeMode(Mode.MEDIUM);
-                      },
-                      isMedium,
-                    )),
-                    Expanded(
-                        child: modeButton(
-                      "Hard",
-                      () {
-                        changeMode(Mode.HARD);
-                      },
-                      isHard,
-                    )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: modeButton(
+                            "Easy",
+                            () {
+                              changeMode(Mode.EASY);
+                            },
+                            isEasy,
+                          )),
+                          Expanded(
+                              child: modeButton(
+                            "Medium",
+                            () {
+                              changeMode(Mode.MEDIUM);
+                            },
+                            isMedium,
+                          )),
+                          Expanded(
+                              child: modeButton(
+                            "Hard",
+                            () {
+                              changeMode(Mode.HARD);
+                            },
+                            isHard,
+                          )),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: playButton(),
+                    ),
                   ],
                 ),
               ),
-              Flexible(
-                flex: 2,
-                child: playButton(),
-              ),
-            ],
+            ),
           ),
         ),
       ),
