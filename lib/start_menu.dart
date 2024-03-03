@@ -200,11 +200,14 @@ class _StartMenuState extends State<StartMenu> {
                       ),
                     ),
                     Expanded(
-                      child: FittedBox(
-                        child: Text(
-                          "Best score : ${widget.bestScore}",
-                          style:
-                              const TextStyle(fontSize: 40, color: Colors.white),
+                      child: SizedBox(
+                        width: 150,
+                        child: FittedBox(
+                          child: Text(
+                            "Best score : ${widget.bestScore}",
+                            style: const TextStyle(
+                                fontSize: 40, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
@@ -214,12 +217,12 @@ class _StartMenuState extends State<StartMenu> {
                         children: [
                           Expanded(
                               child: modeButton(
-                                                          "Easy",
-                                                          () {
+                            "Easy",
+                            () {
                               changeMode(Mode.EASY);
-                                                          },
-                                                          isEasy,
-                                                        )),
+                            },
+                            isEasy,
+                          )),
                           Expanded(
                               child: modeButton(
                             "Medium",
