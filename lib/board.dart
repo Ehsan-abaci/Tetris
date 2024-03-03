@@ -87,6 +87,7 @@ class _GameBoardState extends State<GameBoard> {
       barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
+        scrollable: true,
         titlePadding: const EdgeInsets.fromLTRB(30, 30, 0, 20),
         contentPadding: const EdgeInsets.fromLTRB(30, 0, 0, 20),
         title: const Text('Game Over !!'),
@@ -104,9 +105,7 @@ class _GameBoardState extends State<GameBoard> {
                 backgroundColor: MaterialStatePropertyAll(Colors.grey.shade200),
               ),
               onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-                print(mode);
+                
                 Navigator.pushReplacementNamed(context, '/', arguments: mode);
               },
               child: const Text("Restart game"))
