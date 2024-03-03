@@ -156,9 +156,8 @@ class _StartMenuState extends State<StartMenu> {
           height: constraints.maxHeight,
           width: constraints.maxWidth,
           child: Center(
-            child: SizedBox(
-              height: constraints.maxHeight,
-              width: kIsWeb ? constraints.maxWidth * .27 : constraints.maxWidth,
+            child: AspectRatio(
+              aspectRatio: 3 / 5.5,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 40.0),
                 child: Column(
@@ -201,10 +200,12 @@ class _StartMenuState extends State<StartMenu> {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        "Best score : ${widget.bestScore}",
-                        style:
-                            const TextStyle(fontSize: 40, color: Colors.white),
+                      child: FittedBox(
+                        child: Text(
+                          "Best score : ${widget.bestScore}",
+                          style:
+                              const TextStyle(fontSize: 40, color: Colors.white),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -213,12 +214,12 @@ class _StartMenuState extends State<StartMenu> {
                         children: [
                           Expanded(
                               child: modeButton(
-                            "Easy",
-                            () {
+                                                          "Easy",
+                                                          () {
                               changeMode(Mode.EASY);
-                            },
-                            isEasy,
-                          )),
+                                                          },
+                                                          isEasy,
+                                                        )),
                           Expanded(
                               child: modeButton(
                             "Medium",
@@ -253,34 +254,36 @@ class _StartMenuState extends State<StartMenu> {
   }
 
   Widget playButton() {
-    return Container(
-      height: 100,
-      width: 100,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Center(
-        child: Container(
-          height: 95,
-          width: 95,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(47.5),
-          ),
-          child: IconButton(
-            iconSize: 50,
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
+    return FittedBox(
+      child: Container(
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: Center(
+          child: Container(
+            height: 95,
+            width: 95,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(47.5),
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/board',
-                  arguments: [isEasy, isMedium, isHard]);
-            },
-            icon: const Icon(
-              Icons.play_arrow,
-              color: Colors.white,
+            child: IconButton(
+              iconSize: 50,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/board',
+                    arguments: [isEasy, isMedium, isHard]);
+              },
+              icon: const Icon(
+                Icons.play_arrow,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -300,7 +303,7 @@ class _StartMenuState extends State<StartMenu> {
                 side: const BorderSide(
                   color: Colors.grey,
                 ))),
-        child: Text(text),
+        child: FittedBox(child: Text(text)),
       ),
     );
   }

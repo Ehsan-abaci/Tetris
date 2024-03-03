@@ -255,107 +255,104 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: LayoutBuilder(
-          builder: (context, constraints) => SizedBox(
-            height: constraints.maxHeight,
-            width: constraints.maxWidth,
-            child: Center(
-              child: SizedBox(
-                height: constraints.maxHeight,
-                width:
-                    kIsWeb ? constraints.maxWidth * .27 : constraints.maxWidth,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 12,
-                      child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: colLength * rowLength,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: rowLength,
-                          ),
-                          itemBuilder: (context, index) {
-                            int row = (index / rowLength).floor();
-                            int col = index % rowLength;
-                            if (currentPiece.position.contains(index)) {
-                              return Pixel(
-                                color: currentPiece.color,
-                              );
-                            } else if (row < colLength &&
-                                col < rowLength &&
-                                gameBoard[row][col] != null) {
-                              final Tetromino? tetrominoType =
-                                  gameBoard[row][col];
-                              return Pixel(
-                                color: tetrominoColors[tetrominoType]!,
-                              );
-                            } else {
-                              return Pixel(
-                                color: Colors.grey.shade900,
-                              );
-                            }
-                          }),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: iconButton(Icons.arrow_left, moveLeft)),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Flexible(
-                                    flex: 1,
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: LayoutBuilder(
+        builder: (context, constraints) => SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: 3 / 5.5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 12,
+                    child: GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: colLength * rowLength,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: rowLength,
+                        ),
+                        itemBuilder: (context, index) {
+                          int row = (index / rowLength).floor();
+                          int col = index % rowLength;
+                          if (currentPiece.position.contains(index)) {
+                            return Pixel(
+                              color: currentPiece.color,
+                            );
+                          } else if (row < colLength &&
+                              col < rowLength &&
+                              gameBoard[row][col] != null) {
+                            final Tetromino? tetrominoType =
+                                gameBoard[row][col];
+                            return Pixel(
+                              color: tetrominoColors[tetrominoType]!,
+                            );
+                          } else {
+                            return Pixel(
+                              color: Colors.grey.shade900,
+                            );
+                          }
+                        }),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: iconButton(Icons.arrow_left, moveLeft)),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: FittedBox(
                                     child: Text(
                                       "Score: $currentScore",
                                       style: const TextStyle(
                                           color: Colors.white, fontSize: 25),
                                     ),
                                   ),
-                                  Flexible(
-                                      flex: 2,
-                                      child: iconButton(
-                                          Icons.rotate_left, rotate)),
-                                ],
-                              ),
+                                ),
+                                Flexible(
+                                    flex: 2,
+                                    child:
+                                        iconButton(Icons.rotate_left, rotate)),
+                              ],
                             ),
-                            Expanded(
-                                child: iconButton(Icons.arrow_right, moveRight))
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                              child: iconButton(Icons.arrow_right, moveRight))
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
         ),
-      );
-    
-    
+      ),
+    );
   }
 
   Widget iconButton(IconData icon, VoidCallback function) {
-    return IconButton(
+    return FittedBox(
+      child: IconButton(
         onPressed: function,
-        constraints: const BoxConstraints(
-            minHeight: double.infinity, minWidth: double.infinity),
         splashColor: Colors.black,
         highlightColor: Colors.black,
         icon: Icon(
           icon,
           color: Colors.white,
           size: 40,
-        ));
+        ),
+      ),
+    );
   }
 }
